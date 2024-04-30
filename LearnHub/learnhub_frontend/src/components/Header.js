@@ -13,7 +13,18 @@ function Header(){
         <Link className="nav-link active" aria-current="page" to="/">Home</Link>
         <a className="nav-link" href="/">Courses</a>
         <a className="nav-link" href="/">Teachers</a>
-        <Link className="nav-link" to="/about">About Us</Link>
+        <li className="nav-item dropdown">
+          <a href="/" className="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">User</a>
+        <ul className="dropdown-menu" aria-labelledby='navbarDropdown'>
+          <li> <Link className="dropdown-item" to="/user-login">Login</Link></li>
+          <li><Link className="dropdown-item" to="/user-register">Register</Link></li>
+          <li><hr className="dropdown-divider" /></li>
+          <li><Link to="/user-dashboard" className="dropdown-item">Dashboard</Link></li>
+          <li><a href="/" className="dropdown-item">Logout</a></li>
+        </ul>
+        </li>
+       
+        
       </div>
     </div>
   </div>
