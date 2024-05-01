@@ -10,6 +10,17 @@ import {Routes as Switch,Route} from 'react-router-dom'
 import MyCourses from './User/MyCourses'
 import FavouriteCourses from './User/FavouriteCourses'
 import RecommendedCourses from './User/RecommendedCourses'
+import ProfileSetting from './User/ProfileSetting'
+import ChangePassword from './User/ChangePassword'
+import TeacherLogin from './Teacher/TeacherLogin'
+import TeacherRegister from './Teacher/TeacherRegister'
+import TeacherDashboard from './Teacher/TeacherDashboard'
+import TeacherCourses from './Teacher/TeacherCourses'
+import AddCourse from './Teacher/AddCourse'
+import MyUsers from './Teacher/MyUsers'
+import TeacherProfileSetting from './Teacher/TeacherProfileSetting'
+import TeacherChangePassword from './Teacher/TeacherChangePassword'
+import TeacherDetail from './TeacherDetail'
 
 
 function Main() {
@@ -26,6 +37,18 @@ function Main() {
      <Route path="/my-courses" element={ <MyCourses/> }/>
      <Route path="/favourite-courses" element={ <FavouriteCourses/> }/>
      <Route path="/recommended-courses" element={ <RecommendedCourses/> }/>
+     <Route path="/profile-setting" element={ <ProfileSetting/> }/>
+     <Route path="/change-password" element={ <ChangePassword/> }/>
+     <Route path="/teacher-login" element={ <TeacherLogin/> }/>
+     <Route path="/teacher-register" element={ <TeacherRegister/> }/>
+     <Route path="/teacher-dashboard" element={ <TeacherDashboard/> }/>
+     <Route path="/teacher-courses" element={ <TeacherCourses/> }/>
+     <Route path="/add-courses" element={ <AddCourse/> }/>
+     <Route path="/teacher-users" element={ <MyUsers/> }/>
+     <Route path="/teacher-profile-setting" element={ <TeacherProfileSetting/> }/>
+     <Route path="/teacher-change-password" element={ <TeacherChangePassword/> }/>
+     <Route path="/teacher-detail/:teacher_id" element={ <TeacherDetail/> }/>
+
      </Switch>
      <Footer/>
     </>
