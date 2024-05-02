@@ -5,10 +5,10 @@ from django.db import models
 class Teacher(models.Model):
     full_name = models.CharField(max_length=100)
     email = models.EmailField(max_length=100)
+    mobile = models.BigIntegerField()
     password = models.CharField(max_length=100)
     qualification = models.CharField(max_length=200)
-    mobile = models.BigIntegerField()
-    address = models.TextField()
+    skills = models.TextField()
     
     class Meta:
         verbose_name_plural = "Teachers"

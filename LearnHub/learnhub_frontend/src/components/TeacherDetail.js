@@ -6,7 +6,7 @@ function TeacherDetail(){
         <div className="col-4"><img src="/logo512.png" className="card-img-top" alt="Teacher"/></div>
         <div className="col-8"><h3>Ashish Chaudhary</h3>
         <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quisquam, consequuntur odio sed ullam consectetur facere, culpa repudiandae fugit ab placeat minima! Laboriosam tempora consectetur minima esse totam nobis optio doloribus. Ipsum eum voluptatem perferendis natus, odio aliquid, architecto sequi molestiae fuga deleniti nemo laboriosam eius. Dicta vero cumque nihil id.</p>
-        <p className="fw-bold">Skills: <Link to="/teacher-detail/1">Php</Link>, <Link to="/teacher-detail/1">Python</Link>, <Link to="/teacher-detail/1">JavaScript</Link></p>
+        <p className="fw-bold">Skills: <Link to="/category/php">Php</Link>, <Link to="/category/python">Python</Link>, <Link to="/category/Javascript">JavaScript</Link></p>
         <p className="fw-bold">Recent Course: <Link to="/teacher-detail/1">Php</Link></p>
         <p className="fw-bold">Rating: 4/5</p>
     </div>

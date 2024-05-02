@@ -1,10 +1,14 @@
 import {Link} from 'react-router-dom'
+import { useEffect } from "react";
 
 function Home(){
+    useEffect(()=>{
+        document.title = "LearnHub | Home";
+    })
     return (
         <div className="container mt-4">
             {/* latest Courses */}
-            <h3 className="pb-1 mb-4">Latest Courses <a href="/" className="float-end">See All</a></h3>
+            <h3 className="pb-1 mb-4">Latest Courses <Link to="/all-courses" className="float-end">See All</Link></h3>
             <div className="row mb-4">
             <div className="col-md-3">
             <div className="card">
@@ -41,7 +45,7 @@ function Home(){
             </div>
             {/* End of latest Courses */}
             {/* Popular Courses */}
-            <h3 className="pb-1 mb-4 mt-5">Popular Courses <a href="/" className="float-end">See All</a></h3>
+            <h3 className="pb-1 mb-4 mt-5">Popular Courses <Link to="/popular-courses" className="float-end">See All</Link></h3>
             <div className="row mb-4">
             <div className="col-md-3">
             <div className="card">
@@ -49,21 +53,11 @@ function Home(){
                 <div className="card-body">
                 <h5 className="card-title"><a href="/">Course title</a></h5>
             </div>
-            </div>
-            </div>
-            <div className="col-md-3">
-            <div className="card">
-            <a href="/"><img src="logo512.png" className="card-img-top" alt="..."/></a>
-                <div className="card-body">
-                <h5 className="card-title"><a href="/">Course title</a></h5>
-            </div>
-            </div>
-            </div>
-            <div className="col-md-3">
-            <div className="card">
-            <a href="/"><img src="logo512.png" className="card-img-top" alt="..."/></a>
-                <div className="card-body">
-                <h5 className="card-title"><a href="/">Course title</a></h5>
+            <div className="card-footer">
+                <div className="title">
+                    <span>Rating : 4.5/5</span>
+                    <span className='float-end'>Views : 8.1k</span>
+                    </div> 
             </div>
             </div>
             </div>
@@ -72,19 +66,53 @@ function Home(){
             <a href="/"><img src="logo512.png" className="card-img-top" alt="..."/></a>
                 <div className="card-body">
                 <h5 className="card-title"><a href="/">Course title</a></h5>
+            </div>
+            <div className="card-footer">
+                <div className="title">
+                    <span>Rating : 4.5/5</span>
+                    <span className='float-end'>Views : 8.1k</span>
+                    </div> 
+            </div>
+            </div>
+            </div>
+            <div className="col-md-3">
+            <div className="card">
+            <a href="/"><img src="logo512.png" className="card-img-top" alt="..."/></a>
+                <div className="card-body">
+                <h5 className="card-title"><a href="/">Course title</a></h5>
+            </div>
+            <div className="card-footer">
+                <div className="title">
+                    <span>Rating : 4.5/5</span>
+                    <span className='float-end'>Views : 8.1k</span>
+                    </div> 
+            </div>
+            </div>
+            </div>
+            <div className="col-md-3">
+            <div className="card">
+            <a href="/"><img src="logo512.png" className="card-img-top" alt="..."/></a>
+                <div className="card-body">
+                <h5 className="card-title"><a href="/">Course title</a></h5>
+            </div>
+            <div className="card-footer">
+                <div className="title">
+                    <span>Rating : 4.5/5</span>
+                    <span className='float-end'>Views : 8.1k</span>
+                    </div> 
             </div>
             </div>
             </div>
             </div>
             {/* End of popular Courses */}
             {/*Popular teachers */}
-            <h3 className="pb-1 mb-4 mt-5">Popular Teachers <a href="/" className="float-end">See All</a></h3>
+            <h3 className="pb-1 mb-4 mt-5">Popular Teachers <Link to="/popular-teachers" className="float-end">See All</Link></h3>
             <div className="row mb-4">
             <div className="col-md-3">
             <div className="card">
             <a href="/"><img src="logo512.png" className="card-img-top" alt="..."/ ></a>
                 <div className="card-body">
-                <h5 className="card-title"><a href="/">Teacher Name</a></h5>
+                <h5 className="card-title"><Link to="/teacher-detail/1">Teacher Detail</Link></h5>
             </div>
             </div>
             </div>
@@ -92,7 +120,7 @@ function Home(){
             <div className="card">
             <a href="/"><img src="logo512.png" className="card-img-top" alt="..."/></a>
                 <div className="card-body">
-                <h5 className="card-title"><a href="/">Teacher Name</a></h5>
+                <h5 className="card-title"><Link to="/teacher-detail/1">Teacher Detail</Link></h5>
             </div>
             </div>
             </div>
@@ -100,7 +128,7 @@ function Home(){
             <div className="card">
             <a href="/"><img src="logo512.png" className="card-img-top" alt="..."/></a>
                 <div className="card-body">
-                <h5 className="card-title"><a href="/">Teacher Name</a></h5>
+                <h5 className="card-title"><Link to="/teacher-detail/1">Teacher Detail</Link></h5>
             </div>
             </div>
             </div>
@@ -108,7 +136,7 @@ function Home(){
             <div className="card">
             <a href="/"><img src="logo512.png" className="card-img-top" alt="..."/></a>
                 <div className="card-body">
-                <h5 className="card-title"><a href="/">Teacher Name</a></h5>
+                <h5 className="card-title"><Link to="/teacher-detail/1">Teacher Detail</Link></h5>
             </div>
             </div>
             </div>
