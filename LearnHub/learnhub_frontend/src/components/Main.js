@@ -31,6 +31,8 @@ import TeacherDetail from './TeacherDetail'
 import PopularCourses from './PopularCourses'
 import PopularTeachers from './PopularTeachers'
 import CategoryCourses from './CategoryCourses'
+import TeacherLogout from './Teacher/TeacherLogout'
+import AddModules from './Teacher/AddModules'
 
 
 function Main() {
@@ -54,10 +56,12 @@ function Main() {
      <Route path="/profile-setting" element={ <ProfileSetting/> }/>
      <Route path="/change-password" element={ <ChangePassword/> }/>
      <Route path="/teacher-login" element={ <TeacherLogin/> }/>
+     <Route path="/teacher-logout" element={ <TeacherLogout/> }/>
      <Route path="/teacher-register" element={ <TeacherRegister/> }/>
      <Route path="/teacher-dashboard" element={ <TeacherDashboard/> }/>
      <Route path="/teacher-courses" element={ <TeacherCourses/> }/>
      <Route path="/add-courses" element={ <AddCourse/> }/>
+     <Route path="/add-modules/:course_id" element={ <AddModules/> }/>
      <Route path="/teacher-users" element={ <MyUsers/> }/>
      <Route path="/teacher-profile-setting" element={ <TeacherProfileSetting/> }/>
      <Route path="/teacher-change-password" element={ <TeacherChangePassword/> }/>

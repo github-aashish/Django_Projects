@@ -1,5 +1,6 @@
 import {Link} from 'react-router-dom';
 import TeacherSidebar from './TeacherSidebar';
+import './Teacher.css';
 
 
 function TeacherCourses(){
@@ -26,6 +27,7 @@ function TeacherCourses(){
             <td><Link to="/">253</Link></td>
             <td>
                 <button className='btn btn-sm btn-danger active'>Delete</button>
+                <Link to="/add-modules/2" className='btn btn-success btn-sm active ms-3'>Add Module</Link>
             </td>
         </tbody>
             </table>

@@ -33,6 +33,9 @@ class CourseCategory(models.Model):
     
     class Meta:
         verbose_name_plural = "Categories"
+        
+    def __str__(self):
+        return self.title
     
 #Course Model
 class Course(models.Model):
@@ -40,6 +43,8 @@ class Course(models.Model):
     teacher = models.ForeignKey(Teacher, on_delete = models.CASCADE)
     title = models.CharField(max_length=150)
     description = models.TextField()
+    featured_image = models.ImageField(upload_to='courses_images/', null=True)
+    technologies = models.TextField(null=True)
     
     class Meta:
         verbose_name_plural = "Courses"
