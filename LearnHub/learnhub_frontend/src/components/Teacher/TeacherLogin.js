@@ -8,7 +8,7 @@ function TeacherLogin(){
 
     const [teacherLoginData,setTeacherLoginData] = useState({
         email : '',
-        password : ''
+        password : '',
     });
     const handleChange = (event) =>{
         setTeacherLoginData({
@@ -17,6 +17,7 @@ function TeacherLogin(){
         }
         );
     }
+    const [errorMsg,setErrorMsg] = useState('');
 
     const submitForm = () =>{
         const teacherFormData = new FormData();
@@ -25,12 +26,18 @@ function TeacherLogin(){
 
         try{
             axios.post(baseUrl+'/teacher-login', teacherFormData).then((res)=>{
-                console.log(res.data);
+                //console.log(res.data);
                 if(res.data.bool === true){
                     //console.log("ye nhi hua execute")
                     localStorage.setItem('teacherLoginStatus',true);
+                    localStorage.setItem('teacherId',res.data.teacher_id);
+                    localStorage.setItem('teacherName',res.data.name);
                     window.location.href = '/teacher-dashboard';
                     //console.log(localStorage.getItem('teacherLoginStatus'));
+                    
+                }
+                else{
+                    setErrorMsg('Invalid Email or Password!!!')
                 }
             });
         }
@@ -50,6 +57,7 @@ function TeacherLogin(){
     }
     );
 
+    
     return (
         <div className="container mt-5">
             <div className="row">
@@ -57,6 +65,7 @@ function TeacherLogin(){
                 <div className="card">
                     <h5 className="card-header">Teacher Login</h5>
                     <div className="card-body">
+                {errorMsg && <p className="text-danger">{errorMsg}</p>}
                        {/* <form>*/} 
                             <div className="mb-3">
                                 <label htmlFor="uemail" className="form-label">Email</label>

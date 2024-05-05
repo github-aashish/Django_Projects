@@ -22,11 +22,13 @@ function MyUsers(){
             </tr>
         </thead>
         <tbody>
+            <tr>
             <td>Milan</td>
             <td><Link to="/">Python</Link></td>
             <td>
                 <button className='btn btn-sm btn-danger active'>Delete</button>
             </td>
+            </tr>
         </tbody>
             </table>
         </div>

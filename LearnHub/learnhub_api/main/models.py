@@ -12,6 +12,9 @@ class Teacher(models.Model):
     
     class Meta:
         verbose_name_plural = "Teachers"
+        
+    def __str__(self) -> str:
+        return self.full_name
     
 #Student Model
 class Student(models.Model):
@@ -48,3 +51,16 @@ class Course(models.Model):
     
     class Meta:
         verbose_name_plural = "Courses"
+    def __str__(self):
+        return self.title
+        
+#Videos
+class Modules(models.Model):
+    course = models.ForeignKey(Course, on_delete = models.CASCADE)
+    title = models.CharField(max_length=150)
+    description = models.TextField()
+    video = models.FileField(upload_to='module_videos/', null=True)
+    remarks = models.TextField(null=True)
+    
+    class Meta:
+        verbose_name_plural = "Videos"

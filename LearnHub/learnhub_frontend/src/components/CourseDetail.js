@@ -3,6 +3,7 @@ import {Link} from 'react-router-dom';
 
 function CourseDetail(){
     //let {course_id} = useParams();
+
     return (
         <div className="container mt-3">
             <div className="row">
@@ -35,7 +36,7 @@ function CourseDetail(){
                                     </div>
                                     <div className="modal-body">
                                         <div className="ratio ratio-16x9">
-                                            <iframe src="https://www.youtube.com/embed/zpOULjyy-n8?rel=0" title="Youtube Video" allowFullScreen></iframe>
+                                            <iframe src="http://127.0.0.1:8000/media/module_videos/Demo_video.mp4" title="Youtube Video" allowFullScreen></iframe>
                                         </div>
                                     </div>
                                 </div>

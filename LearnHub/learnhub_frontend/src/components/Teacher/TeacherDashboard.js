@@ -2,6 +2,7 @@
 import TeacherSidebar from './TeacherSidebar';
 
 function TeacherDashboard(){
+    const teacherName = localStorage.getItem('teacherName')
     return (
         <div className="container mt-5">
             <div className="row">
@@ -9,7 +10,7 @@ function TeacherDashboard(){
     <TeacherSidebar />
 </aside>
 <section className="col-md-9">
-    Dashboard
+    <h2>Welcome {teacherName}</h2>
 </section>
             </div>
         </div>

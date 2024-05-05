@@ -5,6 +5,7 @@ const baseUrl = 'http://127.0.0.1:8000/api';
 
 function AddCourse(){
     const [cats,setCats] = useState([]);
+    const teacherId = localStorage.getItem('teacherId')
     const [courseData, setCourseData] = useState({
             category : '',
             title : '',
@@ -42,7 +43,7 @@ function AddCourse(){
     const formSubmit = () =>{
         const _formData = new FormData();
         _formData.append('category', courseData.category);
-        _formData.append('teacher', 34);
+        _formData.append('teacher', teacherId);
         _formData.append('title', courseData.title);
         _formData.append('description', courseData.description);
         _formData.append('featured_image', courseData.featured_image,courseData.featured_image.name);
@@ -53,7 +54,15 @@ function AddCourse(){
                     'content-type':'multipart/form-data'
                 }
             }).then((res)=>{
-                console.log(res.data);
+                //console.log(res.data);
+                setCourseData({
+                    category : '',
+                    title : '',
+                    description : '',
+                    featured_image: '',
+                    technologies : '',
+                    'status':'success'
+                })
                 })
             }
         catch(error){
@@ -72,30 +81,33 @@ function AddCourse(){
     <TeacherSidebar/>
 </aside>
 <section className="col-9">
+                {courseData.status === 'success' && <p className="text-success">Course Added Successfully</p>}
+                {courseData.status === 'error' && <p className="text-fail">Something Went Wrong</p>}
     <div className="card">
         <h5 className="card-header">Add Courses</h5>
         <div className="card-body">
             <div className="mb-3">
         <label htmlFor="categoryies" className="form-label">Category</label>
-            <select name="category" onChange={handleChange} id="categoryies" className="form-control">
-            {cats.map((category,index)=>{return <option key={category.id} value={category.id}>{category.title}</option>})}
+            <select value={courseData.category} name="category" onChange={handleChange} id="categoryies" className="form-control">
+                <option>Select</option>
+            {cats.map((category,index)=>{return <option key={index} value={category.id}>{category.title}</option>})}
             </select>
     </div>
         <div className="mb-3">
         <label htmlFor="title" className="form-label">Title</label>
-            <input type="text" onChange={handleChange} name="title" id="title" className="form-control"/>
+            <input type="text" value={courseData.title} onChange={handleChange} name="title" id="title" className="form-control"/>
     </div>
     <div className="mb-3">
         <label htmlFor="desc" className="form-label">Description</label>
-        <textarea className="form-control" onChange={handleChange} name="description" id="desc"></textarea>
+        <textarea className="form-control" value={courseData.description} onChange={handleChange} name="description" id="desc"></textarea>
     </div>
     <div className="mb-3">
         <label htmlFor="image" className="form-label">Featured Image</label>
-            <input type="file" id="image" onChange={handleFileChange} name="featured_image" className="form-control"/>
+            <input type="file"  id="image" onChange={handleFileChange} name="featured_image" className="form-control"/>
     </div>
     <div className="mb-3">
         <label htmlFor="interest" className="form-label">Technologies</label>
-            <textarea className="form-control" onChange={handleChange} name="technologies" placeholder="Php, Java, Python, etc.." id="interest"></textarea>
+            <textarea className="form-control" value={courseData.technologies} onChange={handleChange} name="technologies" placeholder="Php, Java, Python, etc.." id="interest"></textarea>
     </div>
     <hr />
     <button className='btn btn-primary' onClick={formSubmit}>Submit</button>
