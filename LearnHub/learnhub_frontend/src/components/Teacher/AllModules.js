@@ -3,11 +3,14 @@ import TeacherSidebar from './TeacherSidebar';
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+//import Swal from 'sweetalert2'
 const baseUrl = 'http://127.0.0.1:8000/api';
 
 function AllModules(){
 
     const [moduleData, setModuleData] = useState([]);
+    const [totalModule, settotalModule] = useState(0);
+
     const {course_id} = useParams();
 
     //Fetch Coursers when page load
@@ -16,6 +19,7 @@ function AllModules(){
         try{
             axios.get(baseUrl+'/course-modules/'+course_id).then((res)=>{
                 //console.log(res.data);
+                settotalModule(res.data.length);
                 setModuleData(res.data);
             });
         }
@@ -23,6 +27,43 @@ function AllModules(){
             console.log(error);
         }
     },[]);
+
+    const Swal = require('sweetalert2');
+    const handleDeleteClick = (module_id)=>{
+        console.log("Delete Executed!!!!!!");
+            Swal.fire({
+                title : 'Confirm!',
+                text : 'Do you want to Delete this?',
+                icon : 'info',
+                confirmButtonText : 'Continue',
+                showCancelButton : true
+            }).then((result)=>{
+                if(result.isConfirmed){
+                    try{
+                        axios.delete(baseUrl+'/modules/'+module_id).then((res)=>{
+                            Swal.fire('success','Data has been deleted');
+                            try{
+                                axios.get(baseUrl+'/course-modules/'+course_id).then((res)=>{
+                                    //console.log(res.data);
+                                    settotalModule(res.data.length);
+                                    setModuleData(res.data);
+                                });
+                            }
+                            catch(error){
+                                console.log(error);
+                            }
+                        });
+                        
+                    }
+                    catch(error){
+                        Swal.fire('error','Data has not been deleted!!!');
+                    }
+                }
+                else{
+                    Swal.fire('error','Data has not been deleted!!!');
+                }
+            });
+    };
 
     return (
         <div className="container mt-5">
@@ -32,7 +73,7 @@ function AllModules(){
 </aside>
 <section className="col-md-9">
     <div className="card">
-        <h5 className="card-header">All Modules</h5>
+        <h5 className="card-header">All Modules ({totalModule})</h5>
         <div className="card-body">
         <table className="table table-bordered">
         <thead>
@@ -46,7 +87,7 @@ function AllModules(){
         <tbody>
             {moduleData.map((module,index )=>
             <tr>
-            <td><Link to="#">{module.title}</Link></td>
+            <td><Link to={`/edit-module`+module.id}>{module.title}</Link></td>
             <td>
                 <video controls width="250">
                     <source src={module.video} type="video/webm" />
@@ -56,8 +97,8 @@ function AllModules(){
             </td>
             <td>{module.remarks}</td>
             <td>
-                <button className='btn btn-danger '>Delete</button>
-                <button className='btn btn-info ms-2'>Edit</button>
+                <Link to={`/edit-module/`+module.id} className='btn btn-info '><i className='bi bi-pencil-square'></i></Link>
+                <button onClick={()=>handleDeleteClick(module.id)} className='btn btn-danger ms-1'><i className='bi bi-trash3'></i></button>
             </td>
             </tr>
             )}

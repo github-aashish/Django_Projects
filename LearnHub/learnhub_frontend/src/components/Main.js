@@ -34,6 +34,7 @@ import CategoryCourses from './CategoryCourses'
 import TeacherLogout from './Teacher/TeacherLogout'
 import AddModules from './Teacher/AddModules'
 import AllModules from './Teacher/AllModules'
+import EditModule from './Teacher/EditModule'
 
 
 function Main() {
@@ -62,6 +63,7 @@ function Main() {
      <Route path="/teacher-dashboard" element={ <TeacherDashboard/> }/>
      <Route path="/teacher-courses" element={ <TeacherCourses/> }/>
      <Route path="/all-modules/:course_id" element={ <AllModules/> }/>
+     <Route path="/edit-module/:module_id" element={ <EditModule/> }/>
      <Route path="/add-courses" element={ <AddCourse/> }/>
      <Route path="/add-modules/:course_id" element={ <AddModules/> }/>
      <Route path="/teacher-users" element={ <MyUsers/> }/>

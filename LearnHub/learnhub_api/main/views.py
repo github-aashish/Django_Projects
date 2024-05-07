@@ -56,12 +56,11 @@ class TeacherCourseList(generics.ListAPIView):
         teacher = models.Teacher.objects.get(pk = teacher_id )
         return models.Course.objects.filter(teacher=teacher)
     
-class ModulesList(generics.ListCreateAPIView):
-    queryset = models.Modules.objects.all()
-    serializer_class = ModulesSerializer
+#class ModulesList(generics.ListCreateAPIView):   
+#    queryset = models.Modules.objects.all()
+#    serializer_class = ModulesSerializer
     #permission_classes = [permissions.IsAuthenticated]
     
-
     
 class CourseModuleList(generics.ListAPIView):
     serializer_class = ModulesSerializer
@@ -71,3 +70,8 @@ class CourseModuleList(generics.ListAPIView):
         course_id = self.kwargs['course_id']
         course = models.Course.objects.get(pk = course_id )
         return models.Modules.objects.filter(course=course)
+    
+class ModuleDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = models.Modules.objects.all()
+    serializer_class = ModulesSerializer
+    #permission_classes = [permissions.IsAuthenticated]
