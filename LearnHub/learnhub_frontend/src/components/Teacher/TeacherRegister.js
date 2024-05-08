@@ -17,16 +17,11 @@ function TeacherRegister(){
 
     //Change Element Value
     const handleChange = (event)=>{
-        //console.log("Hello Ashish");
-        //console.log(event.target.name,event.target.value);
         setTeacherData({
             ...teacherData,
             [event.target.name]:event.target.value   
         });
     }
-    //console.log(teacherData);
-    //End
-    //console.log(teacherData.status  );
 
     //Submit Form
     const SubmitForm = ()=>{
@@ -61,7 +56,6 @@ function TeacherRegister(){
     };
     //End 
 
-    //console.log(teacherData.status  );
     useEffect(() =>{
         document.title = "Teacher Register";
     }

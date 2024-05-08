@@ -35,6 +35,9 @@ import TeacherLogout from './Teacher/TeacherLogout'
 import AddModules from './Teacher/AddModules'
 import AllModules from './Teacher/AllModules'
 import EditModule from './Teacher/EditModule'
+import EditCourse from './Teacher/EditCourse'
+import TeacherSkillCourses from './Teacher/TeacherSkillCourses'
+import Logout from './User/Logout'
 
 
 function Main() {
@@ -50,6 +53,7 @@ function Main() {
      <Route path="/popular-courses" element={ <PopularCourses/> }/>
      <Route path="/popular-teachers" element={ <PopularTeachers/> }/>
      <Route path="/user-login" element={ <Login/> }/>
+     <Route path="/user-logout" element={ <Logout/> }/>
      <Route path="/user-register" element={ <Register/> }/>
      <Route path="/user-dashboard" element={ <Dashboard/> }/>
      <Route path="/my-courses" element={ <MyCourses/> }/>
@@ -61,7 +65,9 @@ function Main() {
      <Route path="/teacher-logout" element={ <TeacherLogout/> }/>
      <Route path="/teacher-register" element={ <TeacherRegister/> }/>
      <Route path="/teacher-dashboard" element={ <TeacherDashboard/> }/>
+     <Route path="/edit-course/:course_id" element={ <EditCourse/> }/>
      <Route path="/teacher-courses" element={ <TeacherCourses/> }/>
+     <Route path="/teacher-skill-courses/:skill_name/:teacher_id" element={ <TeacherSkillCourses/> }/>
      <Route path="/all-modules/:course_id" element={ <AllModules/> }/>
      <Route path="/edit-module/:module_id" element={ <EditModule/> }/>
      <Route path="/add-courses" element={ <AddCourse/> }/>

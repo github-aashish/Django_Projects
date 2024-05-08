@@ -2,6 +2,8 @@ import {Link} from 'react-router-dom'
 
 function Header(){
   const teacherLoginStatus = localStorage.getItem('teacherLoginStatus');
+  const studentLoginStatus = localStorage.getItem('studentLoginStatus');
+
 
 
     return (
@@ -29,11 +31,12 @@ function Header(){
         <li className="nav-item dropdown">
           <a href="/" className="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">User</a>
         <ul className="dropdown-menu" aria-labelledby='navbarDropdown'>
-          <li> <Link className="dropdown-item" to="/user-login">Login</Link></li>
-          <li><Link className="dropdown-item" to="/user-register">Register</Link></li>
-          <li><hr className="dropdown-divider" /></li>
-          <li><Link to="/user-dashboard" className="dropdown-item">Dashboard</Link></li>
-          <li><Link to="/user-logout" className="dropdown-item">Logout</Link></li>
+        {studentLoginStatus!=='true' && 
+              <><li> <Link className="dropdown-item" to="/user-login">Login</Link></li>
+          <li><Link className="dropdown-item" to="/user-register">Register</Link></li></>
+        }
+          {studentLoginStatus ==='true' && <><li><Link to="/user-dashboard" className="dropdown-item">Dashboard</Link></li>
+          <li><Link to="/user-logout" className="dropdown-item">Logout</Link></li></>}
         </ul>
         </li>
        

@@ -2,6 +2,7 @@
 import Sidebar from './Sidebar';
 
 function Dashboard(){
+    const studentName = localStorage.getItem('studentName')
     return (
         <div className="container mt-5">
             <div className="row">
@@ -9,7 +10,7 @@ function Dashboard(){
     <Sidebar />
 </aside>
 <section className="col-md-9">
-    Dashboard
+<h2>Welcome {studentName}</h2>
 </section>
             </div>
         </div>

@@ -73,7 +73,7 @@ function AllModules(){
 </aside>
 <section className="col-md-9">
     <div className="card">
-        <h5 className="card-header">All Modules ({totalModule})</h5>
+        <h5 className="card-header">All Modules ({totalModule}) <Link className='btn btn-success btn-sm float-end' to={`/add-modules/` + course_id}>Add Module</Link></h5>
         <div className="card-body">
         <table className="table table-bordered">
         <thead>

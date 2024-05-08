@@ -38,7 +38,7 @@ function AddModules(){
         _formData.append('video', moduleData.video,moduleData.video.name);
         _formData.append('remarks', moduleData.remarks);
         try{
-            axios.post(baseUrl+'/modules/',_formData,{
+            axios.post(baseUrl+'/module/',_formData,{
                 headers:{
                     'content-type':'multipart/form-data'
                 }

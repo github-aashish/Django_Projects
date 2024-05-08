@@ -66,7 +66,6 @@ function TeacherLogin(){
                     <h5 className="card-header">Teacher Login</h5>
                     <div className="card-body">
                 {errorMsg && <p className="text-danger">{errorMsg}</p>}
-                       {/* <form>*/} 
                             <div className="mb-3">
                                 <label htmlFor="uemail" className="form-label">Email</label>
                                 <input type="email" name="email" value={teacherLoginData.email} onChange={handleChange} id="uemail" className="form-control" />
@@ -76,7 +75,6 @@ function TeacherLogin(){
                                 <input type="password" value={teacherLoginData.password} onChange={handleChange} name='password' id="upass" className="form-control" />
                             </div>
                             <button type="submit" onClick={submitForm} className="btn btn-primary">Login</button>
-                        {/* </form>*/}
                     </div>
                 </div>
                 </div>

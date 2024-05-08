@@ -26,7 +26,7 @@ function TeacherCourses(){
             console.log(error);
         }
     },[]);
-    console.log(courseData);
+    //console.log(courseData);
 
     return(
         <div className="container mt-5">
@@ -54,8 +54,9 @@ function TeacherCourses(){
             <td><img src={course.featured_image} width="80" alt={course.title} className='rounded' /></td>
             <td><Link to="/">253</Link></td>
             <td>
-                <button className='btn btn-sm btn-danger'>Delete</button>
-                <Link to={`/add-modules/` + course.id} className='btn btn-success btn-sm ms-3'>Add Module</Link>
+            <Link to={`/edit-course/` + course.id} className='btn btn-info btn-sm '>Edit</Link>
+                <Link to={`/add-modules/` + course.id} className='btn btn-success btn-sm ms-2'>Add Module</Link>
+                <button className='btn btn-sm btn-danger ms-2'>Delete</button>
             </td>
             </tr>
             )}

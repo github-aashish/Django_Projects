@@ -63,7 +63,6 @@ const formSubmit = () =>{
     if(moduleData.video!==''){
         _formData.append('video', moduleData.video,moduleData.video.name);
     }
-    
     _formData.append('remarks', moduleData.remarks);
     try{
         axios.put(baseUrl+'/modules/'+module_id,_formData,{
