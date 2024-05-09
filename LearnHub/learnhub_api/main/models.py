@@ -16,7 +16,7 @@ class Teacher(models.Model):
     class Meta:
         verbose_name_plural = "Teachers"
         
-    def __str__(self) -> str:
+    def __str__(self):
         return self.full_name
     
     def skill_list(self):
@@ -33,6 +33,9 @@ class Student(models.Model):
     
     class Meta:
         verbose_name_plural = "Students"
+        
+    def __str__(self):
+        return self.full_name
     
 #Course Categories
 class CourseCategory(models.Model):
@@ -66,6 +69,13 @@ class Course(models.Model):
     def technologies_list(self):
         technologies_list = self.technologies.split(',')
         return technologies_list
+    
+    def total_enrolled_students(self):
+        total_enrolled_students = StudentCourseEnrollment.objects.filter(course=self).count()
+        return total_enrolled_students
+    def course_rating(self):
+        course_rating = CourseRating.objects.filter(course=self).aggregate(avg_rating=models.Avg('rating'))
+        return course_rating['avg_rating']
         
 #Videos
 class Modules(models.Model):
@@ -77,3 +87,25 @@ class Modules(models.Model):
     
     class Meta:
         verbose_name_plural = "Videos"
+        
+    def __str__(self):
+        return self.title
+        
+class StudentCourseEnrollment(models.Model):
+    course = models.ForeignKey(Course, on_delete = models.CASCADE, related_name='enrolled_courses')
+    student = models.ForeignKey(Student, on_delete = models.CASCADE, related_name='enrolled_student')
+    enroll_time = models.DateTimeField(auto_now_add=True)
+    
+    class Meta:
+        verbose_name_plural = "Enrollments"
+    def __str__(self):
+        return f"{self.course}" +" "+" "+"  |  "+ f"{self.student}"
+
+
+#Course Review and Rating
+class CourseRating(models.Model):
+    course = models.ForeignKey(Course, on_delete = models.CASCADE)
+    student = models.ForeignKey(Student, on_delete = models.CASCADE)
+    rating = models.PositiveBigIntegerField(default=0)
+    review = models.TextField(null=True)
+    review_time = models.DateTimeField(auto_now_add=True)
