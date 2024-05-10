@@ -8,10 +8,11 @@ class Teacher(models.Model):
     full_name = models.CharField(max_length=100)
     email = models.EmailField(max_length=100)
     mobile = models.BigIntegerField()
-    password = models.CharField(max_length=100)
+    password = models.CharField(max_length=100,blank=True,null=True)
     qualification = models.CharField(max_length=200)
     skills = models.TextField()
     detail = models.TextField(null=True)
+    profile_image = models.ImageField(upload_to='teachers_images', null=True)
     
     class Meta:
         verbose_name_plural = "Teachers"
@@ -23,19 +24,50 @@ class Teacher(models.Model):
         skill_list = self.skills.split(',')
         return skill_list
     
+    def total_teacher_courses(self):
+        total_courses = Course.objects.filter(teacher=self).count()
+        return total_courses
+    
+    def total_teacher_modules(self):
+        total_modules = Modules.objects.filter(course__teacher=self).count()
+        return total_modules
+    
+    def total_teacher_students(self):
+        total_students = StudentCourseEnrollment.objects.filter(course__teacher=self).count()
+        return total_students
+    
 #Student Model
 class Student(models.Model):
     full_name = models.CharField(max_length=100)
     username = models.CharField(max_length=200)
     email = models.EmailField(max_length=100)
-    password = models.CharField(max_length=100)
+    password = models.CharField(max_length=100,null=True)
     interested_categories = models.TextField()
+    profile_image = models.ImageField(upload_to='student_images', null=True)
+    
     
     class Meta:
         verbose_name_plural = "Students"
         
     def __str__(self):
         return self.full_name
+    
+    def total_enroll(self):
+        total_enroll = StudentCourseEnrollment.objects.filter(student=self).count()
+        return total_enroll
+    
+    def total_favourite(self):
+        total_favourite = StudentFavouriteCourse.objects.filter(student=self).count()
+        return total_favourite
+    
+    def total_completed(self):
+        total_completed = StudentAssignment.objects.filter(student=self,student_status=True).count()
+        return total_completed
+    
+    def total_pending(self):
+        total_pending = StudentAssignment.objects.filter(student=self,student_status=False).count()
+        return total_pending
+    
     
 #Course Categories
 class CourseCategory(models.Model):
@@ -77,6 +109,18 @@ class Course(models.Model):
         course_rating = CourseRating.objects.filter(course=self).aggregate(avg_rating=models.Avg('rating'))
         return course_rating['avg_rating']
         
+#Favourite Courses
+class StudentFavouriteCourse(models.Model):
+    course = models.ForeignKey(Course,on_delete=models.CASCADE)
+    student = models.ForeignKey(Student, on_delete=models.CASCADE)
+    status = models.BooleanField(default=False)
+    
+    class Meta:
+        verbose_name_plural = "Student Favourite Courses"
+        
+    def __str__(self):
+        return f"{self.course}-{self.student}"
+        
 #Videos
 class Modules(models.Model):
     course = models.ForeignKey(Course, on_delete = models.CASCADE,related_name='course_modules')
@@ -109,3 +153,38 @@ class CourseRating(models.Model):
     rating = models.PositiveBigIntegerField(default=0)
     review = models.TextField(null=True)
     review_time = models.DateTimeField(auto_now_add=True)
+    
+    class Meta:
+        verbose_name_plural = "Ratings"
+    def __str__(self):
+        return f"{self.course}" +" "+" "+"  |  "+ f"{self.student}" +" "+" "+"  |  "+ f"{self.rating}"
+    
+    
+#Assignments
+class StudentAssignment(models.Model):
+    teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE)
+    student = models.ForeignKey(Student, on_delete = models.CASCADE)
+    title = models.CharField(max_length=200)
+    detail = models.TextField(null=True)
+    add_time = models.DateTimeField(auto_now_add=True)
+    student_status = models.BooleanField(default=False,null=True)
+    
+    class Meta:
+        verbose_name_plural = "Assignments"
+        
+    def __str__(self):
+        return f"{self.student}" +" "+" "+"  |  "+ f"{self.title}" +" "+" "+"  |  "+ f"{self.add_time}"
+    
+
+
+#Notifications    
+class Notification(models.Model):
+    teacher = models.ForeignKey(Teacher,on_delete=models.CASCADE,null=True)
+    student = models.ForeignKey(Student,on_delete=models.CASCADE,null=True)
+    notif_subject = models.CharField(max_length=200,verbose_name="Notification Subject",null=True)
+    notif_for = models.CharField(max_length=200,verbose_name="Notification For",null=True)
+    notif_created_time = models.DateTimeField(auto_now_add=True)
+    notif_read_status = models.BooleanField(default=False,verbose_name="Notification Read Status")
+    
+    class Meta:
+        verbose_name_plural = "Notifications"

@@ -1,5 +1,7 @@
 function TeacherLogout(){
     localStorage.removeItem('teacherLoginStatus');
+    localStorage.removeItem('teacherId');
+    localStorage.removeItem('teacherName');
     window.location.href = '/teacher-login'
     return(<></>);
 }

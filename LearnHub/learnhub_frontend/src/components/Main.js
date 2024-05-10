@@ -39,6 +39,9 @@ import EditCourse from './Teacher/EditCourse'
 import TeacherSkillCourses from './Teacher/TeacherSkillCourses'
 import Logout from './User/Logout'
 import EnrolledStudents from './Teacher/EnrolledStudents'
+import AddAssignment from './Teacher/AddAssignment'
+import ShowAssignment from './Teacher/ShowAssignment'
+import Assignments from './User/Assignments'
 
 
 function Main() {
@@ -78,7 +81,9 @@ function Main() {
      <Route path="/teacher-profile-setting" element={ <TeacherProfileSetting/> }/>
      <Route path="/teacher-change-password" element={ <TeacherChangePassword/> }/>
      <Route path="/teacher-detail/:teacher_id" element={ <TeacherDetail/> }/>
-
+     <Route path="/add-assignment/:student_id/:teacher_id" element={ <AddAssignment/> }/>
+     <Route path="/show-assignment/:student_id/:teacher_id" element={ <ShowAssignment/> }/>
+     <Route path="/assignments" element={ <Assignments/> }/>
      </Switch>
      <Footer/>
     </>

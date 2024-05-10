@@ -43,8 +43,7 @@ function AddModules(){
                     'content-type':'multipart/form-data'
                 }
             }).then((res)=>{
-                //console.log(res.data);
-                window.location.href = '/add-modules/4'
+                window.location.href = '/add-modules/'+{course_id}
                 })
             }
         catch(error){

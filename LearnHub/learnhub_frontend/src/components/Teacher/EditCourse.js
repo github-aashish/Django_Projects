@@ -132,6 +132,7 @@ function EditCourse(){
     <div className="mb-3">
         <label htmlFor="image" className="form-label">Featured Image</label>
             <input type="file"  id="image" onChange={handleFileChange} name="featured_image" className="form-control"/>
+            <div id="emailHelp" className="form-text"><span className='badge bg-danger text-dark  me-1'>Note</span>Upload 300px X 300px Size Image</div>
             {courseData.prev_fimage && 
                 <p className="mt-2 text-center"><img src={courseData.prev_fimage} width="300"/></p>
             }

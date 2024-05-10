@@ -4,7 +4,7 @@ function TeacherSidebar(){
     return(
         <div className="card">
         <div className="list-group list-group-flush">
-            <h5><Link to="/user-dashboard" className="list-group-item list-group-item-action card-header">Dashboard</Link></h5>
+            <h5><Link to="/teacher-dashboard" className="list-group-item list-group-item-action card-header">Dashboard</Link></h5>
             <Link to="/teacher-courses" className="list-group-item list-group-item-action">My Courses</Link>
             <Link to="/add-courses" className="list-group-item list-group-item-action">Add Courses</Link>
             <Link to="/teacher-users" className="list-group-item list-group-item-action">My Users</Link>

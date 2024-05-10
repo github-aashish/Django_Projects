@@ -20,7 +20,10 @@ function CourseDetail(){
     const [favouriteStatus,setFavouriteStatus] = useState();
 
     const studentId= localStorage.getItem('studentId');
-    
+    const studentLogin_Status = localStorage.getItem('studentLoginStatus');
+        if(studentLogin_Status === 'true'){
+            setUserLoginStatus('success');
+        }
 
 
     const [ratingData, setRatingData] = useState({
@@ -34,6 +37,7 @@ const handleChange =(event)=>{
         ...ratingData,[event.target.name]:event.target.value
     });
 };
+
 
 
     useEffect (()=>{
@@ -53,13 +57,8 @@ const handleChange =(event)=>{
         catch(error){
             console.log(error);
         }
-        const studentLogin_Status = localStorage.getItem('studentLoginStatus');
-        console.log("Student Status:"+studentLogin_Status)
-        if(studentLogin_Status === 'true'){
-            setUserLoginStatus('success');
-        }
         
-if(studentLogin_Status === 'true'){
+if(userLoginStatus === 'success'){
     //Rating Status
 try{
     axios.get(baseUrl+'/fetch-rating-status/'+studentId+'/'+course_id)
@@ -77,7 +76,6 @@ catch(error){
 try{
     axios.get(baseUrl+'/fetch-favourite-status/'+studentId+'/'+course_id)
     .then((res)=>{
-        console.log("Response Data:"+res)
         if(res.data.bool===true){
             setFavouriteStatus('success');
         }
@@ -319,8 +317,8 @@ catch(error){
                     Course Modules
                 </h5>
             <div className="card-body">
-                <h1 className='text-center'><i className="bi bi-lock-fill"></i></h1>
-            <p classname="card-text"><Link to="/user-login" className="btn btn-primary">Login and Enroll To Unlock Modules !</Link></p>
+                <p classname="text-xl-left"><i className="bi bi-lock-fill"></i></p>
+            <p classname="card-text"><Link to="/user-login" className="btn btn-info">Login to Enroll !</Link></p>
   </div>
 </div>}
 

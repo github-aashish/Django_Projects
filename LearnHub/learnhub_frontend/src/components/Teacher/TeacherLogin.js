@@ -49,7 +49,6 @@ function TeacherLogin(){
 
     const teacherLogin_Status = localStorage.getItem('teacherLoginStatus');
     if(teacherLogin_Status === 'true'){
-        //console.log("true hee hai bhai")
         window.location.href = '/teacher-dashboard';
     }
     useEffect(() =>{
