@@ -60,7 +60,7 @@ const handleChange =(event)=>{
         }
         
 if(studentLogin_Status === 'true'){
-    //Rating Status
+    
 try{
     axios.get(baseUrl+'/fetch-rating-status/'+studentId+'/'+course_id)
     .then((res)=>{
@@ -261,7 +261,7 @@ catch(error){
                       <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div className="modal-body">
-                    <form>
+                    {/* <form>*/}
                         <div className="mb-3">
                             <label for="rating" className="form-label">Rating</label>
                             <select onChange={handleChange} id="rating" className="form-control" name="rating">
@@ -277,7 +277,7 @@ catch(error){
                             <textarea onChange={handleChange} id="review" className='form-control' name="review" rows="5"></textarea>
                         </div>
                         <button type="submit" onClick={formSubmit} className="btn btn-primary">Submit</button>
-                        </form>
+                        {/* </form>*/}
                     </div>
                     <div className="modal-footer">
                       <button type="button"  className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -334,7 +334,7 @@ catch(error){
                     {moduleData.map((module,index)=>
                     <li className="list-group-item">{module.title} 
                     <span className='float-end'>
-                        <span className="me-5">1 Hour 30 Minutes</span><button className="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#videoModal1"><i className="bi-youtube"></i></button></span>
+                        <span className="me-5"></span><button className="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#videoModal1"><i className="bi-youtube"></i></button></span>
                         {/*Video Modal Start*/}
                         {/* modal-xl  for extra large*/ }
                         <div className="modal fade modal-lg" id="videoModal1" tabIndex="-1" aria-labelledby='exampleModalLabel' aria-hidden="true">
@@ -346,7 +346,12 @@ catch(error){
                                     </div>
                                     <div className="modal-body">
                                         <div className="ratio ratio-16x9">
-                                            <iframe src={module.video} title={module.title} allowFullScreen></iframe>
+                                            {/* <iframe src={module.video} title={module.title} allowFullScreen></iframe>*/}
+                                            <video controls width="250">
+                                                <source src={module.video} type="video/webm" />
+                                                <source src={module.video} type="video/mp4" />
+                                                Sorry Your Browser Doesn't Support Embeddeb Videos!!!
+                                            </video>
                                         </div>
                                     </div>
                                 </div>

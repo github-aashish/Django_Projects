@@ -41,7 +41,6 @@ function ProfileSetting(){
         document.title = "Profile Setting";
         try{
             axios.get(baseUrl+'/student/'+studentId).then((res)=>{
-                console.log("Hello Profiles");
                 console.log(res.data.profile_image);
                 setStudentData({
                     full_name : res.data.full_name,
@@ -116,7 +115,7 @@ function ProfileSetting(){
                         </div>
                         <div className="mb-3 row">
                             <label htmlFor="uname" className="form-label">User Name</label>
-                            <input value={studentData.username} onChange={handleChange} type="text" name="full_name" id="uname" className="form-control" />
+                            <input value={studentData.username} onChange={handleChange} type="text" name="username" id="uname" className="form-control" />
                         </div>
                         <div className="mb-3 row">
                             <label htmlFor="uemail" className="form-label">Email</label>

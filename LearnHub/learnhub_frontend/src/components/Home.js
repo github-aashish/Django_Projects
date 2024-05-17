@@ -6,14 +6,32 @@ const baseUrl = 'http://127.0.0.1:8000/api';
 function Home(){
 
     const [courseData, setCourseData] = useState([]);
+    const [popularData, setpopularData] = useState([]);
+    const [teacherData, setTeacherData] = useState([]);
+
 
     //Fetch Coursers when page load
     useEffect (()=>{
         document.title = "LearnHub | Home";
         try{
             axios.get(baseUrl+'/course/?result=4').then((res)=>{
-                //console.log(res.data);
                 setCourseData(res.data);
+            });
+        }
+        catch(error){
+            console.log(error);
+        }
+        try{
+            axios.get(baseUrl+'/popular/?result-popular=4').then((res)=>{
+                setpopularData(res.data);
+            });
+        }
+        catch(error){
+            console.log(error);
+        }
+        try{
+            axios.get(baseUrl+'/popular-teacher/?result=4').then((res)=>{
+                setTeacherData(res.data);
             });
         }
         catch(error){
@@ -42,99 +60,35 @@ function Home(){
             {/* Popular Courses */}
             <h3 className="pb-1 mb-4 mt-5">Popular Courses <Link to="/popular-courses" className="float-end">See All</Link></h3>
             <div className="row mb-4">
-            <div className="col-md-3">
+
+        {popularData && popularData.map((course,index)=>
+            <div className="col-md-3 mb-4 mb-4">
             <div className="card">
-            <a href="/"><img src="js.png" className="card-img-top" alt="..."/ ></a>
+            <Link to={`/detail/${course.id}`}><img src={course.featured_image} className="card-img-top" alt={course.title}/ ></Link>
                 <div className="card-body">
-                <h5 className="card-title"><a href="/">Course title</a></h5>
-            </div>
-            <div className="card-footer">
-                <div className="title">
-                    <span>Rating : 4.5/5</span>
-                    <span className='float-end'>Views : 8.1k</span>
-                    </div> 
+                <h5 className="card-title"><Link to={`/detail/${course.id}`}>{course.title}</Link></h5>
+                {/* <h5 className="card-title"><Link to="#">{course.teacher}</Link></h5>*/}
             </div>
             </div>
             </div>
-            <div className="col-md-3">
-            <div className="card">
-            <a href="/"><img src="js.png" className="card-img-top" alt="..."/></a>
-                <div className="card-body">
-                <h5 className="card-title"><a href="/">Course title</a></h5>
-            </div>
-            <div className="card-footer">
-                <div className="title">
-                    <span>Rating : 4.5/5</span>
-                    <span className='float-end'>Views : 8.1k</span>
-                    </div> 
-            </div>
-            </div>
-            </div>
-            <div className="col-md-3">
-            <div className="card">
-            <a href="/"><img src="js.png" className="card-img-top" alt="..."/></a>
-                <div className="card-body">
-                <h5 className="card-title"><a href="/">Course title</a></h5>
-            </div>
-            <div className="card-footer">
-                <div className="title">
-                    <span>Rating : 4.5/5</span>
-                    <span className='float-end'>Views : 8.1k</span>
-                    </div> 
-            </div>
-            </div>
-            </div>
-            <div className="col-md-3">
-            <div className="card">
-            <a href="/"><img src="js.png" className="card-img-top" alt="..."/></a>
-                <div className="card-body">
-                <h5 className="card-title"><a href="/">Course title</a></h5>
-            </div>
-            <div className="card-footer">
-                <div className="title">
-                    <span>Rating : 4.5/5</span>
-                    <span className='float-end'>Views : 8.1k</span>
-                    </div> 
-            </div>
-            </div>
-            </div>
+        )}
+
             </div>
             {/* End of popular Courses */}
             {/*Popular teachers */}
             <h3 className="pb-1 mb-4 mt-5">Popular Teachers <Link to="/popular-teachers" className="float-end">See All</Link></h3>
             <div className="row mb-4">
-            <div className="col-md-3">
+            {teacherData && teacherData.map((teacher,index)=>
+            <div className="col-md-3 mb-4 mb-4">
             <div className="card">
-            <a href="/"><img src="mteacher.avif" className="card-img-top" alt="..."/ ></a>
+            <Link to={`/detail/${teacher.id}`}><img src={teacher.profile_image} className="card-img-top" alt={teacher.full_name}/ ></Link>
                 <div className="card-body">
-                <h5 className="card-title"><Link to="/teacher-detail/1">Teacher Detail</Link></h5>
+                <h5 className="card-title"><Link to={`/teacher-detail/${teacher.id}`}>{teacher.full_name}</Link></h5>
+                {/* <h5 className="card-title"><Link to="#">{course.teacher}</Link></h5>*/}
             </div>
             </div>
             </div>
-            <div className="col-md-3">
-            <div className="card">
-            <a href="/"><img src="mteacher.avif" className="card-img-top" alt="..."/></a>
-                <div className="card-body">
-                <h5 className="card-title"><Link to="/teacher-detail/1">Teacher Detail</Link></h5>
-            </div>
-            </div>
-            </div>
-            <div className="col-md-3">
-            <div className="card">
-            <a href="/"><img src="mteacher.avif" className="card-img-top" alt="..."/></a>
-                <div className="card-body">
-                <h5 className="card-title"><Link to="/teacher-detail/1">Teacher Detail</Link></h5>
-            </div>
-            </div>
-            </div>
-            <div className="col-md-3">
-            <div className="card">
-            <a href="/"><img src="mteacher.avif" className="card-img-top" alt="..."/></a>
-                <div className="card-body">
-                <h5 className="card-title"><Link to="/teacher-detail/1">Teacher Detail</Link></h5>
-            </div>
-            </div>
-            </div>
+        )}
             </div>
             {/*End of popular teachers */}
             {/* Student testimonials */}

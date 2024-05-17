@@ -30,7 +30,6 @@ function AllModules(){
 
     const Swal = require('sweetalert2');
     const handleDeleteClick = (module_id)=>{
-        console.log("Delete Executed!!!!!!");
             Swal.fire({
                 title : 'Confirm!',
                 text : 'Do you want to Delete this?',

@@ -6,7 +6,7 @@ from django.db.models import Q
 from rest_framework.response import Response
 from rest_framework import generics
 from rest_framework import permissions
-from .serializers import TeacherSerializer, CategorySerializer, CourseSerializer, ModulesSerializer,StudentSerializer,CourseEnrollSerializer,CourseRatingSerializer,TeacherDashboardSerializer,StudentFavouriteCourseSerializer,StudentAssignmentSerializer,StudentDashboardSerializer,NotificationSerializer
+from .serializers import TeacherSerializer, CategorySerializer, CourseSerializer, ModulesSerializer,StudentSerializer,CourseEnrollSerializer,CourseRatingSerializer,TeacherDashboardSerializer,StudentFavouriteCourseSerializer,StudentAssignmentSerializer,StudentDashboardSerializer,NotificationSerializer,QuizSerializer,QuizQuestionSerializer,CourseQuizSerializer,AttemptedQuizSerializer
 from . import models
 
 
@@ -15,11 +15,25 @@ class TeacherList(generics.ListCreateAPIView):
     queryset = models.Teacher.objects.all()
     serializer_class = TeacherSerializer
     #permission_classes = [permissions.IsAuthenticated]
+
+class TeacherpopularList(generics.ListCreateAPIView):
+    queryset = models.Teacher.objects.all()
+    serializer_class = TeacherSerializer
+    #permission_classes = [permissions.IsAuthenticated]
+    
+    def get_queryset(self):
+        qs = super().get_queryset()
+        if 'result' in self.request.GET:
+            limit = int(self.request.GET['result'])
+            qs = models.Teacher.objects.all().order_by('-id')[:limit]
+        return qs
     
 class TeacherDashboard(generics.RetrieveAPIView):
     queryset = models.Teacher.objects.all()
     serializer_class = TeacherDashboardSerializer
     #permission_classes = [permissions.IsAuthenticated]
+    
+    
     
 class StudentList(generics.ListCreateAPIView):
     queryset = models.Student.objects.all()
@@ -87,10 +101,20 @@ class CourseList(generics.ListCreateAPIView):
         if 'result' in self.request.GET:
             limit = int(self.request.GET['result'])
             qs = models.Course.objects.all().order_by('-id')[:limit]
-            
+
+
+        if 'result-popular' in self.request.GET:
+            limit = int(self.request.GET['result-popular'])
+            qs = models.Course.objects.all().order_by('id')[:limit]
+                        
         if 'category' in self.request.GET:
             category = self.request.GET['category']
             qs = models.Course.objects.filter(technologies__icontains=category)
+            
+        if 'searchstring' in self.kwargs:
+            search = self.kwargs['searchstring']
+            if search:
+                qs = models.Course.objects.filter(Q(technologies__icontains=search) | Q(title__icontains=search))
             
         if 'skill_name' in self.request.GET and 'teacher' in self.request.GET:
             skill_name = self.request.GET['skill_name']
@@ -299,3 +323,84 @@ class NotificationList(generics.ListCreateAPIView):
             student_id = self.kwargs['student_id']
             student = models.Student.objects.get(pk = student_id )
             return models.Notification.objects.filter(student=student,notif_for='student',notif_subject='assignment',notif_read_status=False)
+        
+class QuizList(generics.ListCreateAPIView):
+    queryset = models.Quiz.objects.all()
+    serializer_class = QuizSerializer
+    
+class TeacherQuizList(generics.ListCreateAPIView):
+    serializer_class = QuizSerializer
+    #permission_classes = [permissions.IsAuthenticated]
+    
+    def get_queryset(self):
+        teacher_id = self.kwargs['teacher_id']
+        teacher = models.Teacher.objects.get(pk = teacher_id )
+        return models.Quiz.objects.filter(teacher=teacher)
+    
+class TeacherQuizDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = models.Quiz.objects.all()
+    serializer_class = QuizSerializer
+    
+class QuizDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = models.Quiz.objects.all()
+    serializer_class = QuizSerializer
+    #permission_classes = [permissions.IsAuthenticated]
+    
+class QuestionList(generics.ListCreateAPIView):   
+    queryset = models.QuizQuestions.objects.all()
+    serializer_class = QuizQuestionSerializer
+    #permission_classes = [permissions.IsAuthenticated]
+    
+class QuizQuestionsList(generics.ListAPIView):
+    serializer_class = QuizQuestionSerializer
+    #permission_classes = [permissions.IsAuthenticated]
+    
+    def get_queryset(self):
+        quiz_id = self.kwargs['quiz_id']
+        quiz = models.Quiz.objects.get(pk = quiz_id )
+        if 'limit' in self.kwargs:
+            return models.QuizQuestions.objects.filter(quiz=quiz).order_by('id')[:1]
+        elif 'question_id' in self.kwargs:
+            current_question = self.kwargs['question_id']
+            return models.QuizQuestions.objects.filter(quiz=quiz,id__gt=current_question).order_by('id')[:1]
+        else:
+            return models.QuizQuestions.objects.filter(quiz=quiz)
+    
+class QuizAssignList(generics.ListCreateAPIView):
+    queryset = models.CourseQuiz.objects.all()
+    serializer_class = CourseQuizSerializer
+    #permission_classes = [permissions.IsAuthenticated]
+    def get_queryset(self):
+        if 'course_id' in self.kwargs:
+            course_id = self.kwargs['course_id']
+            course = models.Course.objects.get(pk = course_id )
+            return models.CourseQuiz.objects.filter(course=course)
+    
+    
+
+def fetch_quiz_assign_status(request,quiz_id,course_id):
+    quiz = models.Quiz.objects.filter(id=quiz_id).first()
+    course = models.Course.objects.filter(id=course_id).first()
+    assignStatus  = models.CourseQuiz.objects.filter(course=course,quiz=quiz).count()
+    if assignStatus:
+        return JsonResponse({'bool':True})
+    else:
+        return JsonResponse({'bool':False})
+    
+def fetch_quiz_attemp_status(request,quiz_id,student_id):
+    quiz = models.Quiz.objects.filter(id=quiz_id).first()
+    student = models.Student.objects.filter(id=student_id).first()
+    attemptedStatus  = models.AttemptedQuiz.objects.filter(student=student,question__quiz=quiz).count()
+    if attemptedStatus:
+        return JsonResponse({'bool':True})
+    else:
+        return JsonResponse({'bool':False})
+    
+class AttempQuizList(generics.ListCreateAPIView):
+    queryset = models.AttemptedQuiz.objects.all()
+    serializer_class = AttemptedQuizSerializer
+    def get_queryset(self):
+        if 'quiz_id' in self.kwargs:
+            quiz_id = self.kwargs['quiz_id']
+            quiz = models.Quiz.objects.get(pk = quiz_id )
+            return models.AttemptedQuiz.objects.filter(quiz=quiz)

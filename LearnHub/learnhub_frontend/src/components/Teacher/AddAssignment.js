@@ -13,7 +13,6 @@ function AddAssignment(){
     );
     const {student_id} = useParams();
     const {teacher_id} = useParams();
-    console.log("Teacher Id"+teacher_id);
 
     useEffect (()=>{
         document.title = "Add Assignment";})

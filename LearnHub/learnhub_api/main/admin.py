@@ -17,6 +17,10 @@ class NotificationAdmin(admin.ModelAdmin):
     
 admin.site.register(Notification,NotificationAdmin)
 
+admin.site.register(Quiz)
+admin.site.register(QuizQuestions)
+admin.site.register(CourseQuiz)
+admin.site.register(AttemptedQuiz)
 
 
 

@@ -29,7 +29,7 @@ function TeacherDetail(){
 
     return (<div className="container mt-3">
     <div className="row">
-        <div className="col-4"><img src="/mteacher.avif" className="card-img-top" alt="Teacher"/></div>
+        <div className="col-4"><img src={teacherData.profile_image} className="card-img-top" alt="Teacher"/></div>
         <div className="col-8"><h3>{teacherData.full_name}</h3>
         <p>{teacherData.detail}</p>
         <p className="fw-bold">Skills:&nbsp;

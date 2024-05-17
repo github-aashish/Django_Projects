@@ -1,6 +1,4 @@
 import {Routes as Switch,Route} from 'react-router-dom'
-
-
 import Header from './Header'
 import Home from './Home'
 import Footer from './Footer'
@@ -42,6 +40,16 @@ import EnrolledStudents from './Teacher/EnrolledStudents'
 import AddAssignment from './Teacher/AddAssignment'
 import ShowAssignment from './Teacher/ShowAssignment'
 import Assignments from './User/Assignments'
+import AddQuiz from './Teacher/AddQuiz'
+import AllQuiz from './Teacher/AllQuiz'
+import EditQuiz from './Teacher/EditQuiz'
+import AllQuestions from './Teacher/AllQuestions'
+import AddQuizQuestions from './Teacher/AddQuizQuestions'
+import AssignQuiz from './Teacher/AssignQuiz'
+import CourseQuizList from './User/CourseQuizList'
+import TakeQuiz from './User/TakeQuiz'
+import SearchCourses from './SearchCourses'
+import AttemptedStudents from './Teacher/AttemptedStudents'
 
 
 function Main() {
@@ -84,6 +92,16 @@ function Main() {
      <Route path="/add-assignment/:student_id/:teacher_id" element={ <AddAssignment/> }/>
      <Route path="/show-assignment/:student_id/:teacher_id" element={ <ShowAssignment/> }/>
      <Route path="/assignments" element={ <Assignments/> }/>
+     <Route path="/add-quiz" element={ <AddQuiz/> }/>
+     <Route path="/quiz" element={ <AllQuiz/> }/>
+     <Route path="/edit-quiz/:quiz_id" element={ <EditQuiz/> }/>
+     <Route path="/all-questions/:quiz_id" element={ <AllQuestions/> }/>
+     <Route path="/add-quiz-questions/:quiz_id" element={ <AddQuizQuestions/> }/>
+     <Route path="/assign-quiz/:course_id" element={ <AssignQuiz/> }/>
+     <Route path="/course-quiz/:course_id" element={ <CourseQuizList/> }/>
+     <Route path="/take-quiz/:quiz_id" element={ <TakeQuiz/> }/>
+     <Route path="/search/:searchstring" element={ <SearchCourses/> }/>
+     <Route path="/attempted-students/:quiz_id" element={ <AttemptedStudents/> }/>
      </Switch>
      <Footer/>
     </>

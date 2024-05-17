@@ -12,6 +12,10 @@ urlpatterns = [
     path('category/',views.CategoryList.as_view()),
     #Course
     path('course/',views.CourseList.as_view()),
+    path('popular/',views.CourseList.as_view()),
+    path('popular-teacher/',views.TeacherpopularList.as_view()),
+    
+    path('search-courses/<str:searchstring>',views.CourseList.as_view()),
     #Course Detail
     path('course/<int:pk>',views.CourseDetailList.as_view()),
     #Specific Course Videos
@@ -55,6 +59,24 @@ urlpatterns = [
     #Notifications
     path('student/fetch-all-notifications/<int:student_id>',views.NotificationList.as_view()),  
     path('save-notification/',views.NotificationList.as_view()),  
+    
+    #Quiz
+    path('quiz/',views.QuizList.as_view()),
+    path('teacher-quiz/<int:teacher_id>',views.TeacherQuizList.as_view()),
+    path('teacher-quiz-detail/<int:pk>',views.TeacherQuizDetail.as_view()),
+    path('quiz/<int:pk>',views.QuizDetailView.as_view()),
+    path('quiz-questions/',views.QuestionList.as_view()),
+    path('quiz-questions/<int:quiz_id>',views.QuizQuestionsList.as_view()),
+    path('quiz-questions/<int:quiz_id>/<int:limit>',views.QuizQuestionsList.as_view()),
+    path('quiz-questions/<int:quiz_id>/next-question/<int:question_id>',views.QuizQuestionsList.as_view()),
+    path('fetch-quiz-assign-status/<int:quiz_id>/<int:course_id>',views.fetch_quiz_assign_status),
+    path('quiz-assign-course/',views.QuizAssignList.as_view()),
+    path('fetch-assigned-quiz/<int:course_id>',views.QuizAssignList.as_view()),
+    path('attemp-quiz/',views.AttempQuizList.as_view()),
+    path('fetch-quiz-attemp-status/<int:quiz_id>/<int:student_id>',views.fetch_quiz_attemp_status),
+    path('attempted-quiz/<int:quiz_id>',views.AttempQuizList.as_view()),
+    
+    
     
     
 ]

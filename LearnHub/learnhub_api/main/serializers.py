@@ -45,16 +45,18 @@ class StudentFavouriteCourseSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.StudentFavouriteCourse
         fields = ['id','course','student','status']
-        depth = 2
     
     def to_representation(self, instance):
-        self.Meta.depth = 2 if self.context['request'].method == 'GET' else 0
+        self.Meta.depth = 0 if self.context['request'].method != 'GET' else 1
         return super().to_representation(instance)
         
 class ModulesSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Modules
         fields = ['id','course', 'title','description','video','remarks']
+    def to_representation(self, instance):
+        self.Meta.depth = 1 if self.context['request'].method == 'GET' else 0
+        return super().to_representation(instance)
         
 class CourseEnrollSerializer(serializers.ModelSerializer):
     class Meta:
@@ -62,7 +64,7 @@ class CourseEnrollSerializer(serializers.ModelSerializer):
         fields = ['id','course', 'student','enroll_time']
         
     def to_representation(self, instance):
-        self.Meta.depth = 2 if self.context['request'].method == 'GET' else 0
+        self.Meta.depth = 0 if self.context['request'].method != 'GET' else 2
         return super().to_representation(instance)
         
     
@@ -83,7 +85,7 @@ class StudentAssignmentSerializer(serializers.ModelSerializer):
         fields = ['id','teacher','student','title','detail','student_status','add_time']
     
     def to_representation(self, instance):
-        self.Meta.depth = 1 if self.context['request'].method == 'GET' else 0
+        self.Meta.depth = 0 if self.context['request'].method != 'GET' else 1
         return super().to_representation(instance)
                 
 class NotificationSerializer(serializers.ModelSerializer):
@@ -91,3 +93,36 @@ class NotificationSerializer(serializers.ModelSerializer):
         model = models.Notification
         fields = ['id','teacher', 'student','notif_subject','notif_for','notif_created_time','notif_read_status']
         
+        
+class QuizSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Quiz
+        fields = ['id','teacher', 'title','detail','assign_status','add_time']
+        
+    def to_representation(self, instance):
+        self.Meta.depth = 1 if self.context['request'].method == 'GET' else 0
+        return super().to_representation(instance)
+
+
+
+class QuizQuestionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.QuizQuestions
+        fields = ['id','quiz','question', 'ans1','ans2','ans3','ans4','right_ans']
+        
+    
+class CourseQuizSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.CourseQuiz
+        fields = ['id','teacher','course', 'quiz','add_time']
+        
+    def to_representation(self, instance):
+        self.Meta.depth = 1 if self.context['request'].method == 'GET' else 0
+        return super().to_representation(instance)
+    
+class AttemptedQuizSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.AttemptedQuiz
+        fields = ['id','student','question','submitted_answer','add_time']
+        
+    
