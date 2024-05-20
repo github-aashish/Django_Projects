@@ -39,7 +39,7 @@ function AddAssignment(){
             }).then((res)=>{
                 if(res.status===200 || res.status===201){
                     Swal.fire({
-                        title : 'Assignment has been Added',
+                        title : 'Assignment has been Added Successfully',
                         icon : 'success',
                         toast : true,
                         timer : 2000,
