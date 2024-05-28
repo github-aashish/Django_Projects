@@ -88,7 +88,8 @@ function EditCourse(){
                         showConfirmButton : false
                     });
                 }
-                setTimeout(()=>{//window.location.href = '/edit-module/'+module_id;
+                setTimeout(()=>{
+                    //window.location.href = '/edit-module/'+module_id;
                     window.location.reload();
                 },2000);
                 })
