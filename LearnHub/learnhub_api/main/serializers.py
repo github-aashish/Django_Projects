@@ -123,6 +123,10 @@ class CourseQuizSerializer(serializers.ModelSerializer):
 class AttemptedQuizSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.AttemptedQuiz
-        fields = ['id','student','question','submitted_answer','add_time']
+        fields = ['id','student','question','quiz','submitted_answer','add_time']
+        
+    def to_representation(self, instance):
+        self.Meta.depth = 1 if self.context['request'].method == 'GET' else 0
+        return super().to_representation(instance)
         
     

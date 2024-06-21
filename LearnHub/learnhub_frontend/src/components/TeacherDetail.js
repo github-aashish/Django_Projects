@@ -13,7 +13,7 @@ function TeacherDetail(){
     const {teacher_id} = useParams();
 
     useEffect (()=>{
-        document.title = "Courses";
+        document.title = "Teacher | Details";
         try{
             axios.get(baseUrl+'/teacher/'+teacher_id).then((res)=>{
                 setTeacherData(res.data);

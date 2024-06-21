@@ -34,7 +34,9 @@ function TakeQuiz(){
             const _formData = new FormData();
             _formData.append('student',studentId);
             _formData.append('question',question);
-            _formData.append('answer',answer);
+            _formData.append('quiz',quiz_id);
+
+            _formData.append('submitted_answer',answer);
             try{
                 axios.post(baseUrl+'/attemp-quiz/',_formData).then((res)=>{
                     try{

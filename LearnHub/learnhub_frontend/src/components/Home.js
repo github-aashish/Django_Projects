@@ -81,7 +81,7 @@ function Home(){
             {teacherData && teacherData.map((teacher,index)=>
             <div className="col-md-3 mb-4 mb-4">
             <div className="card">
-            <Link to={`/detail/${teacher.id}`}><img src={teacher.profile_image} className="card-img-top" alt={teacher.full_name}/ ></Link>
+            <Link to={`/teacher-detail/${teacher.id}`}><img src={teacher.profile_image} className="card-img-top" alt={teacher.full_name}/ ></Link>
                 <div className="card-body">
                 <h5 className="card-title"><Link to={`/teacher-detail/${teacher.id}`}>{teacher.full_name}</Link></h5>
                 {/* <h5 className="card-title"><Link to="#">{course.teacher}</Link></h5>*/}

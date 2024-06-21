@@ -402,5 +402,17 @@ class AttempQuizList(generics.ListCreateAPIView):
     def get_queryset(self):
         if 'quiz_id' in self.kwargs:
             quiz_id = self.kwargs['quiz_id']
-            quiz = models.Quiz.objects.get(pk = quiz_id )
-            return models.AttemptedQuiz.objects.filter(quiz=quiz)
+            quiz = models.Quiz.objects.get(id = quiz_id )
+            return models.AttemptedQuiz.objects.raw(f'SELECT * FROM main_Attemptedquiz WHERE quiz_id={int(quiz_id)} GROUP by student_id')
+        
+#raw(f'SELECT * FROM main_attempquiz WHERE quiz_id={int(quiz_id)} GROUP by student_id')
+        
+        
+        
+def fetch_quiz_attempt_status(request,quiz_id,student_id):
+    quiz = models.Quiz.objects.filter(id=quiz_id).first()
+    student = models.Student.objects.filter(id=student_id).first()
+    total_questions = models.QuizQuestions.objects.filter(quiz=quiz).count()
+    total_attempted_questions = models.AttemptedQuiz.objects.filter(quiz=quiz,student=student).values('student').count()
+    return JsonResponse({'total_questions':total_questions,'total_attempted_questions':total_attempted_questions})
+    

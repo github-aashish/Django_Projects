@@ -57,7 +57,7 @@ return (
         <>
         <span className='btn btn-sm btn-secondary'>Successfully Assigned
         </span>
-        {/* <Link className='btn btn-sm btn-info ms-2' to={`/attempted-students/` + props.quiz}>Attempted Students</Link>*/}
+         <Link className='btn btn-sm btn-info ms-2' to={`/attempted-students/` + props.quiz}>Attempted Students</Link>
         </>
         }
     </td>

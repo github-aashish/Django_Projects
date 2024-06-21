@@ -8,6 +8,7 @@ const baseUrl = 'http://127.0.0.1:8000/api';
 
 function CourseDetail(){
     const {course_id} = useParams();
+    
     const [courseData, setCourseData] = useState([]);
     const [moduleData, setModuleData] = useState([]);
     const [teacherData, setTeacherData] = useState([]);
@@ -331,6 +332,7 @@ catch(error){
                     Course Modules
                 </h5>
                 <ul className="list-group list-group-flush">
+                    
                     {moduleData.map((module,index)=>
                     <li className="list-group-item">{module.title} 
                     <span className='float-end'>
@@ -348,7 +350,6 @@ catch(error){
                                         <div className="ratio ratio-16x9">
                                             {/* <iframe src={module.video} title={module.title} allowFullScreen></iframe>*/}
                                             <video controls width="250">
-                                                <source src={module.video} type="video/webm" />
                                                 <source src={module.video} type="video/mp4" />
                                                 Sorry Your Browser Doesn't Support Embeddeb Videos!!!
                                             </video>

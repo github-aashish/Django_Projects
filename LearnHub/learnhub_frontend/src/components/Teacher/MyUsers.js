@@ -55,8 +55,8 @@ function MyUsers(){
             {row.student.interested_categories}
             </td>
             <td>
-                <Link to={`/show-assignment/${row.student.id}/${teacherId}`} className='btn btn-sm btn-warning'>Assignments</Link>
-                <Link to={`/add-assignment/${row.student.id}/${teacherId}`} className='btn btn-sm btn-success ms-2'>Add Assignments</Link>
+                <Link to={`/show-assignment/${row.student.id}/${teacherId}`} className='btn btn-sm btn-warning mb-1'>Assignments</Link>
+                <Link to={`/add-assignment/${row.student.id}/${teacherId}`} className='btn btn-sm btn-success'>Add Assignments</Link>
             </td>
             </tr>
             )}

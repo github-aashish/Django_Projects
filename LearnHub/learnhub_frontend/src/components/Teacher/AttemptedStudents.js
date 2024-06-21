@@ -2,7 +2,7 @@ import {Link, useParams} from 'react-router-dom';
 import TeacherSidebar from './TeacherSidebar';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import CheckQuizinCourse from './CheckQuizinCourse'
+import QuizResult from './QuizResult';
 const baseUrl = 'http://127.0.0.1:8000/api';
 
 
@@ -47,14 +47,21 @@ function AttemptedStudents(){
         </thead>
         <tbody>
             {studentData.map((row,index )=>
-            
             <tr>
+
             <td>{row.student.full_name}</td>
             <td>{row.student.email}</td>
             <td>{row.student.username}</td>
-            <td><Link to="#">Quiz Result</Link></td>
+            <td>
+                <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target={`#resultModal${row.id}`}>Quiz Result</button>
+                <div className="modal fade modal-lg" id={`resultModal${row.id}`} tabIndex="-1" aria-labelledby='exampleModalLabel' aria-hidden="true">
+                    <QuizResult quiz={row.quiz.id} student={row.student.id} />
+                </div>
+
+            </td>
             </tr>
             )}
+
         </tbody>
             </table>
         </div>

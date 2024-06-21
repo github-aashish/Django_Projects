@@ -156,6 +156,7 @@ class CourseRating(models.Model):
     
     class Meta:
         verbose_name_plural = "Ratings"
+        
     def __str__(self):
         return f"{self.course}" +" "+" "+"  |  "+ f"{self.student}" +" "+" "+"  |  "+ f"{self.rating}"
     
@@ -233,6 +234,7 @@ class CourseQuiz(models.Model):
 class AttemptedQuiz(models.Model):
     student = models.ForeignKey(Student, on_delete=models.CASCADE,null=True)
     question = models.ForeignKey(QuizQuestions,on_delete=models.CASCADE,null=True)
+    quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE,null=True)
     submitted_answer = models.CharField(max_length=200,null=True)
     add_time = models.DateTimeField(auto_now_add=True)
     
