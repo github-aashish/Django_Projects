@@ -1,5 +1,6 @@
-//import {Link} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import axios from 'axios';
+import Swal from 'sweetalert2'
 import { useEffect,useState } from "react";
 const baseUrl = 'http://127.0.0.1:8000/api';
 
@@ -23,10 +24,9 @@ function TeacherLogin(){
         const teacherFormData = new FormData();
         teacherFormData.append('email',teacherLoginData.email);
         teacherFormData.append('password',teacherLoginData.password);
-
+        if(chk_empty(teacherLoginData.email,teacherLoginData.password)){
         try{
             axios.post(baseUrl+'/teacher-login', teacherFormData).then((res)=>{
-                //console.log(res.data);
                 if(res.data.bool === true){
                     //console.log("ye nhi hua execute")
                     localStorage.setItem('teacherLoginStatus',true);
@@ -44,7 +44,19 @@ function TeacherLogin(){
         catch(error){
             console.log(error);
         }
-        //console.log(teacherLoginData);
+    }
+    else{
+        Swal.fire({
+            title : 'Fields Should not be Empty',
+            icon : 'error',
+            toast : true,
+            timer : 2000,
+            position : 'top-right',
+            timerProgressBar : true,
+            showConfirmButton : false
+        });
+    }
+        
     }
 
     const teacherLogin_Status = localStorage.getItem('teacherLoginStatus');
@@ -56,6 +68,12 @@ function TeacherLogin(){
     }
     );
 
+    function chk_empty(email,pass){
+        if(email.length <1 ||  pass.length <1){
+            return false;
+        }
+        return true;
+    };
     
     return (
         <div className="container mt-5">
@@ -73,7 +91,7 @@ function TeacherLogin(){
                                 <label htmlFor="upass" className="form-label">Password</label>
                                 <input type="password" value={teacherLoginData.password} onChange={handleChange} name='password' id="upass" className="form-control" />
                             </div>
-                            <button type="submit" onClick={submitForm} className="btn btn-primary">Login</button>
+                            <button type="submit" onClick={submitForm} className="btn btn-primary">Login</button><Link to="/teacher-forgot" className='float-end me-3'>Forgot Passwprd ?</Link>
                     </div>
                 </div>
                 </div>

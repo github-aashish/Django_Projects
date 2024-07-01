@@ -18,7 +18,7 @@ class TeacherDashboardSerializer(serializers.ModelSerializer):
 class StudentDashboardSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Student
-        fields = ['total_enroll','total_favourite','total_completed','total_pending']
+        fields = ['profile_image','total_enroll','total_favourite','total_completed','total_pending']
         
 
         
@@ -36,36 +36,59 @@ class CourseSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Course
         fields = ['id','category', 'teacher','title','description','featured_image','technologies','course_modules','related_videos','technologies_list','total_enrolled_students','course_rating']
-        
+
     def to_representation(self, instance):
-        self.Meta.depth = 1 if self.context['request'].method == 'GET' else 0
-        return super().to_representation(instance)
+        # Dynamically set the depth based on the request method
+        if self.context['request'].method == 'GET':
+            serializer = self.__class__(instance, context=self.context)
+            serializer.Meta.depth = 1
+        else:
+            serializer = self.__class__(instance, context=self.context)
+            serializer.Meta.depth = 0
+
+        # Call the to_representation method of the newly created serializer instance
+        return super(CourseSerializer, serializer).to_representation(instance)
                 
 class StudentFavouriteCourseSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.StudentFavouriteCourse
-        fields = ['id','course','student','status']
-    
-    def to_representation(self, instance):
-        self.Meta.depth = 0 if self.context['request'].method != 'GET' else 1
-        return super().to_representation(instance)
+        fields = ['id', 'course', 'student', 'status']
+        depth = 0  # default depth
+
+    def __init__(self, *args, **kwargs):
+        # Call the parent constructor
+        super(StudentFavouriteCourseSerializer, self).__init__(*args, **kwargs)
+
+        # Check if the context is available and contains the request
+        if 'request' in self.context:
+            # Set depth based on the request method
+            self.Meta.depth = 2 if self.context['request'].method == 'GET' else 0
         
 class ModulesSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Modules
         fields = ['id','course', 'title','description','video','remarks']
-    def to_representation(self, instance):
-        self.Meta.depth = 1 if self.context['request'].method == 'GET' else 0
-        return super().to_representation(instance)
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        request = self.context.get('request')
+        if request and request.method == 'GET':
+            self.Meta.depth = 1
+        else:
+            self.Meta.depth = 0
         
 class CourseEnrollSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.StudentCourseEnrollment
-        fields = ['id','course', 'student','enroll_time']
-        
-    def to_representation(self, instance):
-        self.Meta.depth = 0 if self.context['request'].method != 'GET' else 2
-        return super().to_representation(instance)
+        fields = ['id', 'course', 'student', 'enroll_time']
+
+    def __init__(self, *args, **kwargs):
+        # Call the parent constructor
+        super(CourseEnrollSerializer, self).__init__(*args, **kwargs)
+
+        # Check if the context is available and contains the request
+        if 'request' in self.context:
+            # Set depth based on the request method
+            self.Meta.depth = 2 if self.context['request'].method == 'GET' else 0
         
     
         
@@ -80,13 +103,19 @@ class CourseRatingSerializer(serializers.ModelSerializer):
                 
                 
 class StudentAssignmentSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = models.StudentAssignment
-        fields = ['id','teacher','student','title','detail','student_status','add_time']
-    
-    def to_representation(self, instance):
-        self.Meta.depth = 0 if self.context['request'].method != 'GET' else 1
-        return super().to_representation(instance)
+        fields = ['id', 'teacher', 'student', 'title', 'detail', 'student_status', 'add_time']
+        depth = 0
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        request = self.context.get('request')
+        if request and request.method == 'GET':
+            self.Meta.depth = 1
+        else:
+            self.Meta.depth = 0
                 
 class NotificationSerializer(serializers.ModelSerializer):
     class Meta:
@@ -100,7 +129,7 @@ class QuizSerializer(serializers.ModelSerializer):
         fields = ['id','teacher', 'title','detail','assign_status','add_time']
         
     def to_representation(self, instance):
-        self.Meta.depth = 1 if self.context['request'].method == 'GET' else 0
+        self.Meta.depth = 1 if self.context['request'].method != 'GET' else 0
         return super().to_representation(instance)
 
 

@@ -3,12 +3,14 @@ import Sidebar from './Sidebar';
 import { useState,useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from 'axios';
+import './validation.css'
 const baseUrl = 'http://127.0.0.1:8000/api';
 
 function Dashboard(){
     const [dashboardData,setDashboardData] = useState([])
     const studentId = localStorage.getItem('studentId')
     const studentName = localStorage.getItem('studentName')
+    const stuImg = localStorage.getItem('studentImage')
 
     useEffect(()=>{
         try{
@@ -29,7 +31,9 @@ function Dashboard(){
     <Sidebar />
 </aside>
 <section className="col-md-9">
-<h2>Welcome {studentName}</h2>
+<h2><img className='p_image' src={dashboardData.profile_image} alt="Student Image" />
+    Welcome {studentName}
+</h2>
 <div className="row">
         <div className="col-md-4">
             <div className="card border-primary">

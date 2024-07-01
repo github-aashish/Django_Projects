@@ -50,6 +50,8 @@ import CourseQuizList from './User/CourseQuizList'
 import TakeQuiz from './User/TakeQuiz'
 import SearchCourses from './SearchCourses'
 import AttemptedStudents from './Teacher/AttemptedStudents'
+import Forgot from './User/Forgot'
+import TeacherForgot from './Teacher/TeacherForgot'
 
 
 function Main() {
@@ -102,6 +104,8 @@ function Main() {
      <Route path="/take-quiz/:quiz_id" element={ <TakeQuiz/> }/>
      <Route path="/search/:searchstring" element={ <SearchCourses/> }/>
      <Route path="/attempted-students/:quiz_id" element={ <AttemptedStudents/> }/>
+     <Route path="/forgot" element={ <Forgot/> }/>
+     <Route path="/teacher-forgot" element={ <TeacherForgot/> }/>
      </Switch>
      <Footer/>
     </>

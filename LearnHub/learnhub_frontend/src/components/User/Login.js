@@ -1,5 +1,7 @@
-//import {Link} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import axios from 'axios';
+import Swal from 'sweetalert2'
+
 import { useEffect,useState } from "react";
 const baseUrl = 'http://127.0.0.1:8000/api';
 
@@ -22,14 +24,14 @@ function Login(){
         const studentFormData = new FormData();
         studentFormData.append('email',studentLoginData.email);
         studentFormData.append('password',studentLoginData.password);
-
+        if(chk_empty(studentLoginData.email,studentLoginData.password)){
         try{
             axios.post(baseUrl+'/student-login', studentFormData).then((res)=>{
-                //console.log(res.data);
                 if(res.data.bool === true){
                     localStorage.setItem('studentLoginStatus',true);
                     localStorage.setItem('studentId',res.data.student_id);
                     localStorage.setItem('studentName',res.data.name);
+                    localStorage.setItem('studentImage',res.data.profile_image);
                     window.location.href = '/user-dashboard';
                     
                 }
@@ -42,6 +44,18 @@ function Login(){
             console.log(error);
         }
     }
+    else{
+        Swal.fire({
+            title : 'Fields Should not be Empty',
+            icon : 'error',
+            toast : true,
+            timer : 2000,
+            position : 'top-right',
+            timerProgressBar : true,
+            showConfirmButton : false
+        });
+    }
+    }
 
     const studentLogin_Status = localStorage.getItem('studentLoginStatus');
     if(studentLogin_Status === 'true'){
@@ -51,6 +65,13 @@ function Login(){
         document.title = "Student Login";
     }
     );
+
+    function chk_empty(email,pass){
+        if(email.length <1 ||  pass.length <1){
+            return false;
+        }
+        return true;
+    };
 
     return (
         <div className="container mt-5">
@@ -68,7 +89,7 @@ function Login(){
                                 <label htmlFor="upass" className="form-label">Password</label>
                                 <input type="password" value={studentLoginData.password} onChange={handleChange} name='password' id="upass" className="form-control" />
                             </div>
-                            <button type="submit" onClick={submitForm} className="btn btn-primary">Login</button>
+                            <button type="submit" onClick={submitForm} className="btn btn-primary">Login</button><Link to="/forgot" className='float-end me-3'>Forgot Passwprd ?</Link>
                     </div>
                 </div>
                 </div>

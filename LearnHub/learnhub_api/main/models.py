@@ -12,7 +12,7 @@ class Teacher(models.Model):
     qualification = models.CharField(max_length=200)
     skills = models.TextField()
     detail = models.TextField(null=True)
-    profile_image = models.ImageField(upload_to='teachers_images', null=True)
+    profile_image = models.ImageField(upload_to='teachers_images',default = 'teachers_images/default.png')
     
     class Meta:
         verbose_name_plural = "Teachers"
@@ -43,7 +43,7 @@ class Student(models.Model):
     email = models.EmailField(max_length=100)
     password = models.CharField(max_length=100,null=True)
     interested_categories = models.TextField()
-    profile_image = models.ImageField(upload_to='student_images', null=True)
+    profile_image = models.ImageField(upload_to='student_images',default = 'teachers_images/default.png')
     
     
     class Meta:

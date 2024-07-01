@@ -1,12 +1,16 @@
 import {Link,useParams} from 'react-router-dom';
 import { useState,useEffect } from "react";
+import Video from './Video';
 import axios from 'axios';
 import Swal from 'sweetalert2'
+import './style.css'
+
 const SiteUrl = 'http://127.0.0.1:8000/';
 const baseUrl = 'http://127.0.0.1:8000/api';
 
 
 function CourseDetail(){
+
     const {course_id} = useParams();
     
     const [courseData, setCourseData] = useState([]);
@@ -232,6 +236,43 @@ catch(error){
 
     };
 
+    const OpenPopup = () => {
+        const openPopupButton = document.getElementById('openPopup');
+        const closePopupButton = document.getElementById('closePopup');
+        const videoPopup = document.getElementById('videoPopup');
+        const videoPlayer = document.getElementById('videoPlayer');
+    
+        openPopupButton.addEventListener('click', function () {
+            videoPopup.style.display = 'block';
+            videoPlayer.play();
+        });
+    
+        closePopupButton.addEventListener('click', function () {
+            videoPopup.style.display = 'none';
+            videoPlayer.pause();
+            videoPlayer.currentTime = 0;
+        });
+    
+        window.addEventListener('click', function (event) {
+            if (event.target == videoPopup) {
+                videoPopup.style.display = 'none';
+                videoPlayer.pause();
+                videoPlayer.currentTime = 0;
+            }
+        });
+    }
+
+    // document.getElementById("openPopup").addEventListener("click", function () {
+       
+    // });
+
+    const handleVideoClick = (video_src)=>{
+        document.getElementById('videos').src = video_src;
+    }
+
+
+
+
     return (
         <div className="container mt-3">
             <div className="row">
@@ -336,10 +377,10 @@ catch(error){
                     {moduleData.map((module,index)=>
                     <li className="list-group-item">{module.title} 
                     <span className='float-end'>
-                        <span className="me-5"></span><button className="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#videoModal1"><i className="bi-youtube"></i></button></span>
-                        {/*Video Modal Start*/}
-                        {/* modal-xl  for extra large*/ }
-                        <div className="modal fade modal-lg" id="videoModal1" tabIndex="-1" aria-labelledby='exampleModalLabel' aria-hidden="true">
+                        <span className="me-5"></span>
+                        <button className="btn btn-sm btn-danger" data-bs-toggle="modal" onClick={()=>handleVideoClick(module.video)} data-bs-target="#videoModal1"><i className="bi-youtube"></i></button>
+                    </span>
+                    <div className="modal fade modal-lg" id="videoModal1" tabIndex="-1" aria-labelledby='exampleModalLabel' aria-hidden="true">
                             <div className="modal-dialog">
                                 <div className="modal-content">
                                     <div className="modal-header">
@@ -348,17 +389,17 @@ catch(error){
                                     </div>
                                     <div className="modal-body">
                                         <div className="ratio ratio-16x9">
-                                            {/* <iframe src={module.video} title={module.title} allowFullScreen></iframe>*/}
-                                            <video controls width="250">
-                                                <source src={module.video} type="video/mp4" />
+                                        <video id="videos" controls width="250">
+                                                <source src="" type="video/mp4" />
                                                 Sorry Your Browser Doesn't Support Embeddeb Videos!!!
-                                            </video>
+                                                </video>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        {/*Video Modal End*/}
+
+
                         </li>
                     )}
                 </ul>
